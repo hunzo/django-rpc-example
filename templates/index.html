@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<form method="post">
+  {% csrf_token %}
+  <div class="mb-3">
+    <label for="inputEmail" class="form-label">Email address*</label>
+    <input
+      type="email"
+      class="form-control"
+      id="inputEmail"
+      aria-describedby="emailHelp"
+      name="email"
+      required
+    />
+    <div id="emailHelp" class="form-text">enter your email address</div>
+  </div>
+
+  {% include 'message.inc.html' %}
+
+  <button type="submit" class="btn btn-primary w-100 mt-2">
+    Create Visitor Account
+  </button>
+</form>
+
+{% endblock %}

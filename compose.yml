@@ -1,0 +1,36 @@
+version: '3.9'
+services:
+  app:
+    build: .
+    environment:
+      - DEBUG=0
+    env_file:
+      - .env
+    expose:
+      - 8000
+    command: sh -c "sh /app/migrate.sh && sh /app/entrypoint.sh"
+    volumes:
+      - staticfiles:/app/staticfiles/
+      - mediafiles:/app/mediafiles/
+    networks:
+      - backend-net
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    restart: always
+    volumes:
+      - staticfiles:/app/staticfiles/
+      - mediafiles:/app/mediafiles/
+    ports:
+      - 8083:80
+    networks:
+      - backend-net
+
+networks:
+  backend-net:
+
+volumes:
+  staticfiles:
+  mediafiles:
